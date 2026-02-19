@@ -3,77 +3,184 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajeet Singh | Portfolio</title>
+    <title>Ajeet Singh | DBA & DevOps Portfolio</title>
     <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --dark: #1a252f;
+            --light: #f4f7f6;
+            --text: #333;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
             line-height: 1.6;
-            color: #333;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-            text-align: center;
-            background-color: #f4f7f6;
+            color: var(--text);
+            background-color: var(--light);
+            scroll-behavior: smooth;
         }
-        .container {
+
+        /* Navigation */
+        nav {
             background: white;
-            padding: 3rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        h1 { color: #2c3e50; margin-bottom: 0.5rem; }
-        p { color: #7f8c8d; font-size: 1.1rem; }
-        
-        .contact-section {
-            margin-top: 2rem;
+            padding: 1rem 5%;
             display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .logo { font-weight: bold; font-size: 1.5rem; color: var(--primary); }
+        .nav-links { list-style: none; display: flex; }
+        .nav-links li { margin-left: 25px; }
+        .nav-links a { text-decoration: none; color: var(--text); font-weight: 500; transition: 0.3s; }
+        .nav-links a:hover { color: var(--secondary); }
+
+        /* Hero Section */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
             justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(44, 62, 80, 0.9)), url('https://images.unsplash.com/photo-1558494949-ef010cbdcc51?q=80&w=2000') center/cover;
+            color: white;
+            padding: 0 20px;
         }
-        .btn {
-            display: inline-block;
-            padding: 12px 25px;
+        header h1 { font-size: 3.5rem; margin-bottom: 10px; }
+        header p { font-size: 1.5rem; opacity: 0.9; margin-bottom: 30px; }
+        .btn-main {
+            padding: 12px 30px;
+            background: var(--secondary);
+            color: white;
             text-decoration: none;
-            border-radius: 25px;
+            border-radius: 5px;
             font-weight: bold;
-            transition: transform 0.2s, background 0.2s;
+            transition: 0.3s;
         }
-        .btn:hover { transform: translateY(-3px); }
+        .btn-main:hover { background: #2980b9; }
+
+        /* Sections Styling */
+        section { padding: 100px 10%; }
+        h2 { text-align: center; margin-bottom: 50px; font-size: 2.5rem; color: var(--primary); }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+        .card:hover { transform: translateY(-10px); }
+        .tag { background: #e1f5fe; color: #039be5; padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; margin-right: 5px; }
+
+        /* Skills Progress Bars */
+        .skills-container { max-width: 700px; margin: 0 auto; }
+        .skill-row { margin-bottom: 20px; }
+        .skill-info { display: flex; justify-content: space-between; margin-bottom: 5px; }
+        .progress-bar { background: #ddd; height: 10px; border-radius: 5px; overflow: hidden; }
+        .progress-fill { background: var(--secondary); height: 100%; border-radius: 5px; }
+
+        footer { background: var(--dark); color: white; text-align: center; padding: 40px; }
         
-        /* Button Colors */
-        .linkedin { background: #0077b5; color: white; }
-        .email { background: #e74c3c; color: white; }
-        .github { background: #333; color: white; }
+        @media (max-width: 768px) {
+            header h1 { font-size: 2.5rem; }
+            .nav-links { display: none; } /* Mobile menu would go here */
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Ajeet Singh</h1>
-        <p>DBA | DevOps Engineer | AWS Data Engineer | Tech Enthusiast</p>
-        <hr style="border: 0; height: 1px; background: #eee; margin: 2rem 0;">
+    <nav>
+        <div class="logo">Ajeet Singh</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
 
-    <h2>Top Projects</h2>
+    <header id="home">
+        <p>Hi, I'm Ajeet Singh</p>
+        <h1>DBA | DevOps Engineer | Data Engineering | Cloud Enthusiast</h1>
+        <p>I build and automate scalable data infrastructure.</p>
+        <div>
+            <a href="#projects" class="btn-main">View My Work</a>
+            <a href="#contact" class="btn-main" style="background:transparent; border: 2px solid white; margin-left: 10px;">Contact Me</a>
+        </div>
+    </header>
+
+    <section id="projects">
+        <h2>Featured Projects</h2>
         <div class="projects-grid">
-            <div class="project-card">
+            <div class="card">
+                <span class="tag">Python</span><span class="tag">ETL</span>
                 <h3>Inventory Data Pipeline</h3>
-                <p>Automated end-to-end ETL pipeline for inventory management. Features data validation, transformation, and automated loading into a centralized database for real-time reporting.</p>
-                <a href="https://github.com/singhajeet79/inventory-data-pipeline" class="btn-small" target="_blank">View Repository →</a>
+                <p>Automated end-to-end ETL pipeline for inventory management. Features data validation and automated loading.</p>
+                <a href="https://github.com/singhajeet79/inventory-data-pipeline" style="color: var(--secondary); text-decoration: none; font-weight: bold;">View Repo →</a>
             </div>
+            </div>
+    </section>
 
-            
+    <section id="about" style="background: white;">
+        <h2>About Me</h2>
+        <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+            <p>I am a DBA and DevOps Engineer specializing in AWS & Data Engineering. I focus on creating seamless integrations, optimizing database performance, and building responsive, automated cloud environments.</p>
         </div>
-        
-        <h3>Let's Connect</h3>
-        <p>I'm always open to discussing new projects or creative ideas.</p>
+    </section>
 
-        <div class="contact-section">
-            <a href="https://www.linkedin.com/in/ajeet-devops-pro/" class="btn linkedin" target="_blank">LinkedIn</a>
-            <a href="mailto:singhajeet77@gmail.com" class="btn email">Email Me</a>
-            <a href="https://github.com/singhajeet79" class="btn github" target="_blank">GitHub</a>
+    <section id="skills">
+        <h2>Tech Stack</h2>
+        <div class="skills-container">
+            <div class="skill-row">
+                <div class="skill-info"><span>AWS & Cloud Infrastructure</span><span>90%</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 90%;"></div></div>
+            </div>
+            <div class="skill-row">
+                <div class="skill-info"><span>Database Administration (Oracle / Peoplesoft / Exadata)</span><span>85%</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div>
+            </div>
+            <div class="skill-row">
+                <div class="skill-info"><span>DevOps (Kubernetes / Docker/GitHub Actions)</span><span>80%</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 80%;"></div></div>
+            </div>
+            <div class="skill-row">
+                <div class="skill-info"><span>Python & Bash Scripting</span><span>75%</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width: 75%;"></div></div>
+            </div>
         </div>
-    </div>
+    </section>
+
+    <section id="contact" style="background: white;">
+        <h2>Get In Touch</h2>
+        <div style="text-align: center;">
+            <p>Ready to collaborate or have a question?</p><br>
+            <a href="mailto:singhajeet77@gmail.com" class="btn-main">Email Me Directly</a>
+            <div style="margin-top: 30px;">
+                <a href="https://github.com/singhajeet79" style="margin: 0 10px;">GitHub</a>
+                <a href="https://www.linkedin.com/in/ajeet-devops-pro/" style="margin: 0 10px;">LinkedIn</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Ajeet Singh. All rights reserved.</p>
+    </footer>
 
 </body>
 </html>
