@@ -10,9 +10,14 @@ I'm a **AWS Data Engineer | DevOps Engineer | Oracle Peoplesoft DBA** from India
 
 ### 🛠 Tech Stack
 ![AWS](https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white) 
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white) 
-![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white) 
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![Kubernetes](https://img.shields.io/badge/kubernetes-%23326ce5.svg?style=for-the-badge&logo=kubernetes&logoColor=white)
+![Helm](https://img.shields.io/badge/Helm-0F1628?style=for-the-badge&logo=helm&logoColor=white)
+![ArgoCD](https://img.shields.io/badge/Argo%20CD-EF7B4D?style=for-the-badge&logo=argo-cd&logoColor=white)
+![K8s Cluster](https://img.shields.io/badge/K8s_Cluster-Operational-brightgreen?style=flat-square&logo=kubernetes)
+![Nodes](https://img.shields.io/badge/Nodes-Active-blue?style=flat-square&logo=kubernetes)
 ![Terraform](https://img.shields.io/badge/Terraform-7B42BC?style=for-the-badge&logo=terraform&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white) 
 
 ---
 
@@ -22,4 +27,3 @@ I'm a **AWS Data Engineer | DevOps Engineer | Oracle Peoplesoft DBA** from India
 
 ### ✍️ Recent Blog Posts
 - [Check out my Medium](https://medium.com/@ajeets_91456)
-- [Check out my Hashnode](https://hashnode.com/@e5081)
