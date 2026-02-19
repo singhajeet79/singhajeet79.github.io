@@ -3,47 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajeet Singh | DBA & DevOps Portfolio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Ajeet Singh | Data & DevOps Engineer</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
-            --bg-color: #f8f9fa; /* Bright modern background */
-            --accent-color: #2563eb; /* Vibrant Blue */
-            --text-main: #1e293b; /* Deep Slate for readability */
-            --text-muted: #64748b;
-            --card-bg: #ffffff;
+            --bg-main: #0f172a; 
+            --bg-accent: #1e293b; 
+            --accent-glow: #38bdf8; 
+            --text-bright: #f8fafc;
+            --text-dim: #94a3b8;
+            --glass: rgba(15, 23, 42, 0.8);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
             line-height: 1.6;
-            color: var(--text-main);
-            background-color: var(--bg-color);
+            color: var(--text-bright);
+            background-color: var(--bg-main);
             scroll-behavior: smooth;
         }
 
         /* Navigation */
         nav {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
+            background: var(--glass);
+            backdrop-filter: blur(12px);
             padding: 1rem 5%;
             display: flex;
-            justify-content: flex-end; /* Moved links to right, logo removed */
-            align-items: center;
+            justify-content: flex-end;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            border-bottom: 1px solid #e5e7eb;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
         .nav-links { list-style: none; display: flex; }
         .nav-links li { margin-left: 25px; }
-        .nav-links a { text-decoration: none; color: var(--text-main); font-weight: 600; transition: 0.3s; font-size: 0.95rem;}
-        .nav-links a:hover { color: var(--accent-color); }
+        .nav-links a { text-decoration: none; color: var(--text-bright); font-weight: 500; transition: 0.3s; font-size: 0.9rem; }
+        .nav-links a:hover { color: var(--accent-glow); }
 
-        /* Hero Section */
+        /* Hero */
         header {
             height: 100vh;
             display: flex;
@@ -52,73 +52,69 @@
             align-items: center;
             text-align: center;
             padding: 0 20px;
-            background-color: var(--bg-color);
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
         }
-        header h1 { font-size: 3.5rem; color: var(--text-main); margin-bottom: 15px; letter-spacing: -1px; }
-        header p { font-size: 1.25rem; color: var(--text-muted); max-width: 700px; margin-bottom: 35px; }
-        
+        header h1 { 
+            font-size: 4rem; 
+            margin-bottom: 10px; 
+            background: linear-gradient(to right, #fff, #38bdf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        header p { font-size: 1.2rem; color: var(--text-dim); max-width: 800px; margin-bottom: 30px; }
+
         .btn-main {
-            padding: 14px 32px;
-            background: var(--text-main);
-            color: white;
+            padding: 12px 28px;
+            background: var(--accent-glow);
+            color: var(--bg-main);
             text-decoration: none;
-            border-radius: 8px;
+            border-radius: 6px;
             font-weight: bold;
             transition: 0.3s;
-            display: inline-block;
         }
-        .btn-main:hover { background: var(--accent-color); transform: translateY(-2px); }
+        .btn-main:hover { transform: translateY(-2px); box-shadow: 0 0 20px rgba(56, 189, 248, 0.4); }
 
-        /* Section Global */
-        section { padding: 100px 10%; border-bottom: 1px solid #eee; }
-        h2 { text-align: center; margin-bottom: 50px; font-size: 2.2rem; color: var(--text-main); }
+        /* Sections */
+        section { padding: 100px 10%; }
+        h2 { font-size: 2rem; margin-bottom: 50px; text-align: center; color: var(--text-bright); }
 
-        /* Projects Grid */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
-        }
         .card {
-            background: var(--card-bg);
+            background: var(--bg-accent);
             padding: 30px;
             border-radius: 12px;
-            border: 1px solid #eef2f6;
-            transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .card:hover { border-color: var(--accent-color); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .tag { background: #eff6ff; color: var(--accent-color); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; margin-right: 5px; text-transform: uppercase; }
+        .tag { color: var(--accent-glow); font-size: 0.75rem; font-weight: bold; margin-right: 10px; text-transform: uppercase; }
 
-        /* Skills Progress Bars */
-        .skills-container { max-width: 700px; margin: 0 auto; }
-        .skill-row { margin-bottom: 25px; }
-        .skill-info { display: flex; justify-content: space-between; margin-bottom: 8px; font-weight: 600; }
-        .progress-bar { background: #e2e8f0; height: 8px; border-radius: 10px; overflow: hidden; }
-        .progress-fill { background: var(--accent-color); height: 100%; border-radius: 10px; }
+        /* Expertise Bars */
+        .skills-container { max-width: 850px; margin: 0 auto; }
+        .skill-row { margin-bottom: 30px; }
+        .skill-label { color: var(--text-bright); font-weight: 600; margin-bottom: 5px; display: block; }
+        .skill-subtext { color: var(--text-dim); font-size: 0.85rem; margin-bottom: 10px; display: block; }
+        .progress-bar { background: #334155; height: 8px; border-radius: 10px; overflow: hidden; }
+        .progress-fill { background: var(--accent-glow); height: 100%; border-radius: 10px; }
 
-        /* Contact & Icons */
-        .social-links {
-            margin-top: 40px;
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            flex-wrap: wrap;
+        /* Social Icons Fix */
+        .social-links { 
+            margin-top: 40px; 
+            display: flex; 
+            justify-content: center; 
+            gap: 30px; 
         }
-        .social-links a {
-            color: var(--text-muted);
-            font-size: 1.8rem;
-            transition: 0.3s;
+        .social-links a { 
+            color: var(--text-dim); 
+            font-size: 2.2rem; /* Increased size for visibility */
+            transition: 0.3s; 
             text-decoration: none;
+            display: inline-block;
         }
-        .social-links a:hover { color: var(--accent-color); transform: scale(1.2); }
-        .social-links span { display: block; font-size: 0.7rem; font-weight: bold; margin-top: 5px; color: var(--text-muted); }
+        .social-links a:hover { color: var(--accent-glow); transform: translateY(-5px); }
 
-        footer { padding: 50px; text-align: center; color: var(--text-muted); font-size: 0.9rem; }
-        
+        footer { text-align: center; padding: 40px; border-top: 1px solid rgba(255, 255, 255, 0.05); color: var(--text-dim); font-size: 0.8rem; }
+
         @media (max-width: 768px) {
-            header h1 { font-size: 2.2rem; }
-            nav { justify-content: center; }
-            .nav-links li { margin: 0 10px; }
+            header h1 { font-size: 2.5rem; }
+            section { padding: 60px 5%; }
         }
     </style>
 </head>
@@ -136,33 +132,26 @@
 
     <header id="home">
         <h1>Ajeet Singh</h1>
-        <p>DBA | DevOps Engineer | Data Engineering | Cloud Enthusiast</p>
-        <p style="margin-top: -20px;">I architect and automate high-performance data infrastructure.</p>
-        <div>
-            <a href="#projects" class="btn-main">View My Work</a>
-            <a href="#contact" class="btn-main" style="background:transparent; color: var(--text-main); border: 2px solid var(--text-main); margin-left: 10px;">Contact Me</a>
-        </div>
+        <p>Expert DBA | DevOps Engineer | AWS Data Engineering</p>
+        <p>Architecting secure, automated, and scalable cloud-native data systems.</p>
+        <a href="#projects" class="btn-main">Explore Architecture</a>
     </header>
 
     <section id="projects">
-        <h2>Featured Projects</h2>
-        <div class="projects-grid">
-            <div class="card">
-                <div style="margin-bottom: 15px;">
-                    <span class="tag">Python</span><span class="tag">ETL</span><span class="tag">AWS</span>
-                </div>
-                <h3>Inventory Data Pipeline</h3>
-                <p>Automated end-to-end ETL pipeline for inventory management. Features data validation and automated loading into cloud-native databases.</p>
-                <br>
-                <a href="https://github.com/singhajeet79/inventory-data-pipeline" style="color: var(--accent-color); text-decoration: none; font-weight: bold;">View Repository →</a>
-            </div>
+        <h2>Featured Work</h2>
+        <div class="card">
+            <span class="tag">PySpark</span><span class="tag">AWS Glue</span><span class="tag">Redshift</span>
+            <h3 style="margin: 10px 0;">Inventory Data Pipeline</h3>
+            <p style="color: var(--text-dim);">Production-grade ETL pipeline processing large-scale inventory data. Built with data integrity checks and automated scaling.</p>
+            <br>
+            <a href="https://github.com/singhajeet79/inventory-data-pipeline" style="color: var(--accent-glow); text-decoration: none; font-weight: bold;">Source Code →</a>
         </div>
     </section>
 
-    <section id="about" style="background: #ffffff;">
+    <section id="about">
         <h2>About Me</h2>
-        <div style="max-width: 800px; margin: 0 auto; text-align: center;">
-            <p>I am a specialized DBA and DevOps Engineer with a focus on AWS Data Engineering. I bridge the gap between database reliability and cloud automation, optimizing infrastructure for scalability and performance.</p>
+        <div style="max-width: 800px; margin: 0 auto; text-align: center; color: var(--text-dim);">
+            <p>I specialize in bridging Database Administration with modern DevOps. My focus is on AWS ecosystem automation, high-availability data architecture, and CI/CD for data pipelines.</p>
         </div>
     </section>
 
@@ -170,52 +159,46 @@
         <h2>Technical Expertise</h2>
         <div class="skills-container">
             <div class="skill-row">
-                <div class="skill-info"><span>AWS & Cloud Infrastructure</span><span>90%</span></div>
+                <span class="skill-label">Data Engineering</span>
+                <span class="skill-subtext">Apache PySpark, Airflow, SQL, AWS Glue, Redshift</span>
+                <div class="progress-bar"><div class="progress-fill" style="width: 95%;"></div></div>
+            </div>
+            <div class="skill-row">
+                <span class="skill-label">Cloud Infrastructure & IaC</span>
+                <span class="skill-subtext">AWS (S3, CloudWatch, Redshift), Terraform</span>
                 <div class="progress-bar"><div class="progress-fill" style="width: 90%;"></div></div>
             </div>
             <div class="skill-row">
-                <div class="skill-info"><span>Oracle / PeopleSoft / Exadata</span><span>85%</span></div>
+                <span class="skill-label">DevOps & Automation</span>
+                <span class="skill-subtext">Docker, Kubernetes, Jenkins, GitHub Actions</span>
                 <div class="progress-bar"><div class="progress-fill" style="width: 85%;"></div></div>
             </div>
             <div class="skill-row">
-                <div class="skill-info"><span>Kubernetes & Docker</span><span>80%</span></div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 80%;"></div></div>
-            </div>
-            <div class="skill-row">
-                <div class="skill-info"><span>Python & Bash Automation</span><span>75%</span></div>
-                <div class="progress-bar"><div class="progress-fill" style="width: 75%;"></div></div>
+                <span class="skill-label">Database Administration</span>
+                <span class="skill-subtext">Oracle, PeopleSoft, Exadata, PostgreSQL</span>
+                <div class="progress-bar"><div class="progress-fill" style="width: 88%;"></div></div>
             </div>
         </div>
     </section>
 
-    <section id="contact" style="background: #ffffff;">
-        <h2>Get In Touch</h2>
+    <section id="contact">
+        <h2>Connect</h2>
         <div style="text-align: center;">
-            <p>I'm currently open to new opportunities and collaborations.</p><br>
+            <p style="color: var(--text-dim); margin-bottom: 20px;">Available for data architecture and infrastructure consultation.</p>
             <a href="mailto:singhajeet77@gmail.com" class="btn-main">Email Me Directly</a>
             
             <div class="social-links">
-                <a href="https://github.com/singhajeet79" target="_blank" title="GitHub">
-                    <i class="fa-brands fa-github"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/ajeet-devops-pro/" target="_blank" title="LinkedIn">
-                    <i class="fa-brands fa-linkedin"></i>
-                </a>
-                <a href="https://x.com/_ajeett" target="_blank" title="Twitter">
-                    <i class="fa-brands fa-x-twitter"></i>
-                </a>
-                <a href="https://medium.com/@ajeets_91456" target="_blank" title="Medium">
-                    <i class="fa-brands fa-medium"></i>
-                </a>
-                <a href="https://hashnode.com/@e5081" target="_blank" title="Hashnode">
-                    <i class="fa-brands fa-hashnode"></i>
-                </a>
+                <a href="https://github.com/singhajeet79" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/ajeet-devops-pro/" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="https://x.com/_ajeett" target="_blank" title="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="https://medium.com/@ajeets_91456" target="_blank" title="Medium"><i class="fa-brands fa-medium"></i></a>
+                <a href="https://hashnode.com/@e5081" target="_blank" title="Hashnode"><i class="fa-brands fa-hashnode"></i></a>
             </div>
         </div>
     </section>
 
     <footer>
-        <p>&copy; 2026 Ajeet Singh. Built with passion for Data & DevOps.</p>
+        <p>&copy; 2026 Ajeet Singh. Built for Scalability.</p>
     </footer>
 
 </body>
