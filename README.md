@@ -1,9 +1,9 @@
 # Hi there 👋, my name is Ajeet Singh
 
 ### 🙋‍♂️ About me
-I'm a **AWS Data Engineer | DevOps Engineer | Oracle Peoplesoft DBA** from India 🇮🇳. I specialize in building automated data pipelines and managing cloud-native infrastructure.
+I'm a **MLOps/AI Enthusiast | DevOps Engineer | Oracle Peoplesoft DBA** from India 🇮🇳. I specialize in building automated data pipelines and managing cloud-native infrastructure.
 
-- 🔭 **Current Focus:** AWS Data Engineering (Glue, Redshift, PySpark).
+- 🔭 **Current Focus:** MLOps/AI/Platform Engineering.
 - 🌱 **Learning:** Advanced Terraform modules and Kubernetes orchestration.
 - 💬 **Ask me about:** Oracle, DevOps automation, and AWS architecture.
 - 📫 **Reach me:** [LinkedIn](https://www.linkedin.com/in/ajeet-devops-pro/) | [Twitter/X](https://x.com/_ajeett)
