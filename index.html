@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ajeet Singh — MLOps & DevOps Engineer</title>
+  <meta name="description" content="MLOps & DevOps Engineer. Turning experimental models into production-ready systems with Kubernetes, Docker, CI/CD & cloud-native ML infrastructure.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    /* ─────────────────────────────
+       DESIGN TOKENS
+    ───────────────────────────── */
+    :root {
+      /* Backgrounds — layered depth */
+      --bg-base:    #060c14;
+      --bg-raised:  #0b1424;
+      --bg-float:   #101d30;
+      --bg-overlay: #162035;
+
+      /* Borders */
+      --border-sub: rgba(255,255,255,0.055);
+      --border-reg: rgba(255,255,255,0.10);
+      --border-hi:  rgba(0,210,220,0.30);
+
+      /* Brand */
+      --teal:       #00d4e0;
+      --teal-dim:   rgba(0,212,224,0.10);
+      --teal-glow:  rgba(0,212,224,0.22);
+      --amber:      #f0a84a;
+      --green:      #34d88e;
+      --red:        #f56565;
+
+      /* Text — WCAG AA compliant on --bg-base */
+      --text-hi:    #e8f0fa;   /* 12.6:1 */
+      --text-body:  #a8becf;   /* 5.8:1  */
+      --text-muted: #6b8ca8;   /* 4.6:1 — just passes AA */
+      --text-dim:   #445d72;   /* decorative only, not body text */
+
+      /* Type scale */
+      --fs-xs:   0.72rem;
+      --fs-sm:   0.82rem;
+      --fs-base: 0.9rem;
+      --fs-md:   1.05rem;
+      --fs-lg:   1.25rem;
+      --fs-xl:   1.6rem;
+      --fs-2xl:  2.2rem;
+      --fs-hero: clamp(2.6rem, 5vw, 3.8rem);
+
+      /* Fonts */
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Outfit', sans-serif;
+
+      /* Spacing */
+      --space-xs:  0.4rem;
+      --space-sm:  0.75rem;
+      --space-md:  1.25rem;
+      --space-lg:  2rem;
+      --space-xl:  3rem;
+      --space-2xl: 5rem;
+
+      /* Radius */
+      --r-sm: 4px;
+      --r-md: 8px;
+      --r-lg: 12px;
+
+      /* Transitions */
+      --t-fast: 150ms ease;
+      --t-base: 220ms ease;
+      --t-slow: 380ms ease;
+    }
+
+    /* ─────────────────────────────
+       RESET & BASE
+    ───────────────────────────── */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; font-size:14px; }
+    body {
+      font-family: var(--sans);
+      background: var(--bg-base);
+      color: var(--text-body);
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color:inherit; text-decoration:none; }
+    img { display:block; max-width:100%; }
+
+    /* Focus visible — accessibility */
+    :focus-visible {
+      outline: 2px solid var(--teal);
+      outline-offset: 3px;
+      border-radius: var(--r-sm);
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg-base); }
+    ::-webkit-scrollbar-thumb { background: var(--bg-overlay); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+
+    /* ─────────────────────────────
+       NOISE TEXTURE OVERLAY
+    ───────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+      opacity: 0.4;
+    }
+
+    /* ─────────────────────────────
+       NAV
+    ───────────────────────────── */
+    nav {
+      position: sticky; top: 0; z-index: 500;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 var(--space-2xl); height: 56px;
+      background: rgba(6,12,20,0.92);
+      backdrop-filter: blur(16px) saturate(180%);
+      border-bottom: 1px solid var(--border-sub);
+    }
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: var(--fs-sm);
+      color: var(--teal);
+      letter-spacing: 0.05em;
+      font-weight: 500;
+    }
+    .nav-logo span { color: var(--text-muted); font-weight: 400; }
+    nav ul { list-style: none; display: flex; gap: var(--space-lg); align-items: center; }
+    nav ul a {
+      font-size: var(--fs-xs);
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color var(--t-base);
+      padding: 0.3rem 0;
+      position: relative;
+    }
+    nav ul a::after {
+      content: ''; position: absolute; bottom: -2px; left: 0;
+      width: 0; height: 1px; background: var(--teal);
+      transition: width var(--t-base);
+    }
+    nav ul a:hover { color: var(--teal); }
+    nav ul a:hover::after { width: 100%; }
+
+    /* ─────────────────────────────
+       HERO
+    ───────────────────────────── */
+    .hero {
+      position: relative; z-index: 1;
+      display: grid; grid-template-columns: 55% 45%;
+      min-height: calc(100vh - 56px);
+      border-bottom: 1px solid var(--border-sub);
+      overflow: hidden;
+    }
+
+    /* Ambient glow behind hero */
+    .hero::before {
+      content: '';
+      position: absolute; top: -20%; left: -10%;
+      width: 60%; height: 80%;
+      background: radial-gradient(ellipse, rgba(0,212,224,0.06) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: -20%; right: 5%;
+      width: 40%; height: 60%;
+      background: radial-gradient(ellipse, rgba(240,168,74,0.04) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-left {
+      padding: var(--space-2xl) var(--space-2xl) var(--space-2xl) var(--space-2xl);
+      display: flex; flex-direction: column; justify-content: center;
+      border-right: 1px solid var(--border-sub);
+      position: relative; z-index: 2;
+    }
+
+    .hero-eyebrow {
+      display: flex; align-items: center; gap: var(--space-sm);
+      margin-bottom: var(--space-lg);
+    }
+    .eyebrow-line {
+      width: 28px; height: 1px; background: var(--teal);
+    }
+    .eyebrow-text {
+      font-family: var(--mono);
+      font-size: var(--fs-xs);
+      color: var(--teal);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .hero-name {
+      font-size: var(--fs-hero);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--text-hi);
+      margin-bottom: var(--space-md);
+      white-space: nowrap;
+    }
+    .hero-name .accent { color: var(--teal); }
+
+    .hero-role {
+      font-size: var(--fs-md);
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: var(--space-sm);
+    }
+    .hero-role span { color: var(--amber); }
+
+    .hero-bio {
+      font-size: var(--fs-base);
+      color: var(--text-body);
+      max-width: 440px;
+      line-height: 1.8;
+      margin-bottom: var(--space-xl);
+    }
+
+    .hero-actions { display: flex; gap: var(--space-sm); align-items: center; flex-wrap: wrap; margin-bottom: var(--space-lg); }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      padding: 0.6rem 1.35rem;
+      font-family: var(--sans); font-size: var(--fs-sm); font-weight: 600;
+      border-radius: var(--r-md); cursor: pointer;
+      transition: all var(--t-base);
+      border: none;
+    }
+    .btn-primary {
+      background: var(--teal); color: var(--bg-base);
+      box-shadow: 0 0 0 0 var(--teal-glow);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px var(--teal-glow);
+    }
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-hi);
+      border: 1px solid var(--border-reg);
+    }
+    .btn-secondary:hover {
+      border-color: var(--teal);
+      color: var(--teal);
+      background: var(--teal-dim);
+    }
+
+    /* Status badge */
+    .status-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.35rem 0.9rem;
+      background: rgba(52,216,142,0.08);
+      border: 1px solid rgba(52,216,142,0.2);
+      border-radius: 20px;
+      font-family: var(--mono);
+      font-size: var(--fs-xs);
+      color: var(--green);
+    }
+    .status-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--green);
+      animation: pulse-glow 2.4s ease infinite;
+    }
+    @keyframes pulse-glow {
+      0%,100% { box-shadow: 0 0 0 0 rgba(52,216,142,0.5); }
+      50% { box-shadow: 0 0 0 5px rgba(52,216,142,0); }
+    }
+
+    /* Hero scroll cue */
+    .scroll-cue {
+      position: absolute; bottom: 1.8rem; left: var(--space-2xl);
+      display: flex; align-items: center; gap: 0.5rem;
+      font-family: var(--mono); font-size: var(--fs-xs);
+      color: var(--text-dim); letter-spacing: 0.1em;
+      animation: bounce-y 2s ease infinite;
+    }
+    @keyframes bounce-y {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(5px); }
+    }
+
+    /* Hero right */
+    .hero-right {
+      padding: var(--space-2xl) var(--space-xl) var(--space-2xl) var(--space-xl);
+      display: flex; flex-direction: column; gap: var(--space-md);
+      justify-content: center;
+      position: relative; z-index: 2;
+    }
+
+    .info-card {
+      background: var(--bg-raised);
+      border: 1px solid var(--border-sub);
+      border-radius: var(--r-lg);
+      padding: var(--space-md) var(--space-lg);
+      transition: border-color var(--t-base);
+    }
+    .info-card:hover { border-color: var(--border-hi); }
+
+    .card-label {
+      font-family: var(--mono);
+      font-size: var(--fs-xs);
+      color: var(--teal);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-sm);
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .card-label::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--teal);
+      border-radius: 50%;
+    }
+
+    .focus-list { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+    .focus-list li {
+      display: flex; align-items: center; gap: 0.7rem;
+      font-size: var(--fs-base); color: var(--text-body);
+    }
+    .focus-list li::before {
+      content: '→';
+      color: var(--teal); font-family: var(--mono); font-size: var(--fs-xs);
+      flex-shrink: 0;
+    }
+    .focus-list li strong { color: var(--text-hi); font-weight: 600; }
+    .focus-list li em { font-style: normal; color: var(--text-muted); font-size: var(--fs-sm); }
+
+    .pill-group { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .pill {
+      font-family: var(--mono);
+      font-size: var(--fs-xs);
+      padding: 0.22rem 0.65rem;
+      background: var(--bg-overlay);
+      border: 1px solid var(--border-sub);
+      border-radius: var(--r-sm);
+      color: var(--teal);
+      transition: border-color var(--t-fast), background var(--t-fast);
+    }
+    .pill:hover { border-color: var(--teal); background: var(--teal-dim); }
+    .pill--devops {
+      background: rgba(0,212,224,0.08);
+      border-color: rgba(0,212,224,0.25);
+      color: #00d4e0;
+      font-weight: 500;
+    }
+
+    /* Hero illustration */
+    .hero-illustration {
+      background: var(--bg-raised);
+      border: 1px solid var(--border-sub);
+      border-radius: var(--r-lg);
+      padding: 0.75rem 1rem 0.5rem;
+      transition: border-color var(--t-base);
+    }
+    .hero-illustration:hover { border-color: var(--border-hi); }
+    .hero-illustration svg { width: 100%; height: auto; display: block; }
+
+    /* ─────────────────────────────
+       SECTION BASE
+    ───────────────────────────── */
+    .section { position: relative; z-index: 1; padding: var(--space-2xl) var(--space-2xl); }
+    .section--alt { background: var(--bg-raised); }
+    .section--alt + .section--alt { border-top: 1px solid var(--border-sub); }
+
+    .sec-header { margin-bottom: var(--space-xl); }
+    .sec-eyebrow {
+      font-family: var(--mono);
+      font-size: var(--fs-xs); color: var(--teal);
+      letter-spacing: 0.18em; text-transform: uppercase;
+      margin-bottom: 0.4rem; display: block;
+    }
+    .sec-title {
+      font-size: var(--fs-2xl); font-weight: 800;
+      color: var(--text-hi); letter-spacing: -0.025em;
+      line-height: 1.15;
+    }
+    .sec-title span { color: var(--teal); }
+    .sec-divider {
+      width: 40px; height: 2px;
+      background: linear-gradient(90deg, var(--teal), transparent);
+      margin-top: 0.8rem; border-radius: 2px;
+    }
+
+    /* ─────────────────────────────
+       PROJECTS
+    ───────────────────────────── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: var(--space-md);
+    }
+
+    .proj-card {
+      background: var(--bg-raised);
+      border: 1px solid var(--border-sub);
+      border-radius: var(--r-lg);
+      padding: var(--space-lg);
+      display: flex; flex-direction: column; gap: var(--space-sm);
+      transition: border-color var(--t-base), transform var(--t-base), box-shadow var(--t-base);
+      position: relative; overflow: hidden;
+    }
+    .proj-card::before {
+      content: ''; position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--teal), transparent);
+      opacity: 0; transition: opacity var(--t-base);
+    }
+    .proj-card:hover {
+      border-color: var(--border-hi);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.35);
+    }
+    .proj-card:hover::before { opacity: 1; }
+
+    .proj-num {
+      font-family: var(--mono);
+      font-size: var(--fs-xs);
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+    }
+    .proj-card h3 {
+      font-size: var(--fs-lg);
+      font-weight: 700;
+      color: var(--text-hi);
+      line-height: 1.3;
+    }
+    .proj-card p {
+      font-size: var(--fs-base);
+      color: var(--text-body);
+      line-height: 1.75;
+      flex: 1;
+    }
+    .proj-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+    .proj-tag {
+      font-family: var(--mono);
+      font-size: var(--fs-xs);
+      padding: 0.18rem 0.55rem;
+      background: var(--bg-overlay);
+      border: 1px solid var(--border-sub);
+      border-radius: var(--r-sm);
+      color: var(--text-muted);
+    }
+    .proj-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-family: var(--mono);
+      font-size: var(--fs-xs);
+      color: var(--teal);
+      font-weight: 500;
+      transition: gap var(--t-base);
+      margin-top: auto;
+    }
+    .proj-link:hover { gap: 0.75rem; }
+
+    /* Ghost card */
+    .proj-card--ghost {
+      border-style: dashed;
+      opacity: 0.45;
+      align-items: center; justify-content: center;
+      min-height: 200px; text-align: center;
+      background: transparent;
+    }
+    .proj-card--ghost:hover { opacity: 0.65; transform: none; box-shadow: none; }
+
+    /* ─────────────────────────────
+       ABOUT
+    ───────────────────────────── */
+    .about-layout {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: var(--space-2xl);
+      align-items: start;
+    }
+
+    .about-text p {
+      font-size: var(--fs-base);
+      color: var(--text-body);
+      line-height: 1.85;
+      margin-bottom: var(--space-md);
+    }
+    .about-text strong { color: var(--text-hi); font-weight: 600; }
+    .about-text em { font-style: normal; color: var(--teal); }
+
+    /* Timeline */
+    .timeline {
+      margin-top: var(--space-lg);
+      position: relative;
+      padding-left: var(--space-lg);
+    }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 1px; background: var(--border-sub);
+    }
+    .tl-entry {
+      position: relative;
+      padding-bottom: var(--space-md);
+      padding-left: var(--space-sm);
+    }
+    .tl-entry:last-child { padding-bottom: 0; }
+    .tl-entry::before {
+      content: '';
+      position: absolute;
+      left: calc(-1 * var(--space-lg) - 3px);
+      top: 6px;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--bg-base);
+      border: 1.5px solid var(--teal);
+    }
+    .tl-date {
+      font-family: var(--mono);
+      font-size: var(--fs-xs);
+      color: var(--teal);
+      margin-bottom: 0.25rem;
+    }
+    .tl-role { font-size: var(--fs-base); font-weight: 700; color: var(--text-hi); margin-bottom: 0.2rem; }
+    .tl-desc { font-size: var(--fs-sm); color: var(--text-muted); line-height: 1.7; }
+
+    /* Stats */
+    .stat-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      border: 1px solid var(--border-sub);
+      border-radius: var(--r-lg); overflow: hidden;
+    }
+    .stat-cell {
+      padding: 1.6rem 1.2rem; text-align: center;
+      background: var(--bg-raised);
+      border-right: 1px solid var(--border-sub);
+      border-bottom: 1px solid var(--border-sub);
+    }
+    .stat-cell:nth-child(even) { border-right: none; }
+    .stat-cell:nth-last-child(-n+2) { border-bottom: none; }
+    .stat-num {
+      display: block;
+      font-family: var(--mono);
+      font-size: 2rem;
+      font-weight: 500;
+      color: var(--teal);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+    .stat-label {
+      font-size: var(--fs-xs);
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* Philosophy list */
+    .phil-list {
+      list-style: none;
+      margin-top: var(--space-lg);
+      display: flex; flex-direction: column; gap: 0.8rem;
+    }
+    .phil-list li {
+      display: flex; gap: var(--space-sm);
+      font-size: var(--fs-base);
+      color: var(--text-body);
+    }
+    .phil-list li::before {
+      content: '//';
+      font-family: var(--mono);
+      font-size: var(--fs-xs);
+      color: var(--amber);
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+    .phil-list strong { color: var(--text-hi); }
+
+    /* ─────────────────────────────
+       SKILLS
+    ───────────────────────────── */
+    .skills-layout { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2xl); }
+
+    .skill-group-label {
+      font-family: var(--mono);
+      font-size: var(--fs-xs);
+      color: var(--amber);
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      margin-bottom: var(--space-md);
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .skill-group-label::after { content: ''; flex: 1; height: 1px; background: var(--border-sub); }
+
+    .skill { margin-bottom: var(--space-md); }
+    .skill-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.25rem; }
+    .skill-name { font-size: var(--fs-base); font-weight: 600; color: var(--text-hi); }
+    .skill-name--hi { color: var(--teal); font-size: var(--fs-md); }
+    .skill-pct { font-family: var(--mono); font-size: var(--fs-xs); color: var(--teal); }
+    .skill-sub { font-size: var(--fs-sm); color: var(--text-muted); margin-bottom: 0.45rem; display: flex; flex-wrap: wrap; gap: 0.3rem; align-items: center; }
+    .skill-tag {
+      font-family: var(--mono); font-size: 0.68rem;
+      padding: 0.12rem 0.5rem;
+      background: rgba(0,212,224,0.08);
+      border: 1px solid rgba(0,212,224,0.2);
+      border-radius: 3px; color: var(--teal);
+    }
+    .bar-track { height: 3px; background: rgba(255,255,255,0.06); border-radius: 3px; }
+    .bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--teal), var(--green));
+      border-radius: 3px;
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 1s cubic-bezier(.4,0,.2,1);
+    }
+    .bar-fill--devops {
+      background: linear-gradient(90deg, #00d4e0, #34d88e, #f0a84a);
+      height: 4px;
+    }
+    .bar-fill.on { transform: scaleX(1); }
+
+    /* ─────────────────────────────
+       CONTACT
+    ───────────────────────────── */
+    .contact-layout { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2xl); align-items: start; }
+    .contact-left p { font-size: var(--fs-base); color: var(--text-body); line-height: 1.85; margin-bottom: var(--space-md); }
+
+    .email-cta {
+      display: inline-flex; align-items: center; gap: 0.65rem;
+      padding: 0.75rem 1.4rem;
+      background: var(--teal-dim);
+      border: 1px solid var(--border-hi);
+      border-radius: var(--r-md);
+      font-family: var(--mono);
+      font-size: var(--fs-sm);
+      color: var(--teal);
+      transition: background var(--t-base), box-shadow var(--t-base);
+    }
+    .email-cta:hover {
+      background: rgba(0,212,224,0.18);
+      box-shadow: 0 0 20px var(--teal-glow);
+    }
+
+    .social-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0.6rem;
+    }
+    .soc-link {
+      display: flex; align-items: center; gap: 0.7rem;
+      padding: 0.8rem 1.1rem;
+      background: var(--bg-raised);
+      border: 1px solid var(--border-sub);
+      border-radius: var(--r-md);
+      font-size: var(--fs-base);
+      font-weight: 500;
+      color: var(--text-muted);
+      transition: border-color var(--t-base), color var(--t-base), background var(--t-base);
+    }
+    .soc-link i { width: 18px; text-align: center; font-size: 1rem; flex-shrink: 0; }
+    .soc-link:hover {
+      border-color: var(--teal);
+      color: var(--teal);
+      background: var(--teal-dim);
+    }
+
+    /* ─────────────────────────────
+       FOOTER
+    ───────────────────────────── */
+    footer {
+      position: relative; z-index: 1;
+      padding: 1.5rem var(--space-2xl);
+      border-top: 1px solid var(--border-sub);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    footer p { font-family: var(--mono); font-size: var(--fs-xs); color: var(--text-dim); }
+    footer .f-teal { color: var(--teal); }
+    .footer-links { display: flex; gap: var(--space-md); }
+    .footer-links a { font-family: var(--mono); font-size: var(--fs-xs); color: var(--text-dim); transition: color var(--t-fast); }
+    .footer-links a:hover { color: var(--teal); }
+
+    /* ─────────────────────────────
+       PAGE LOAD ANIMATIONS
+    ───────────────────────────── */
+    .fade-up {
+      opacity: 0; transform: translateY(16px);
+      animation: fadeUp 0.55s var(--t-slow) forwards;
+    }
+    .fade-up:nth-child(2) { animation-delay: 0.1s; }
+    .fade-up:nth-child(3) { animation-delay: 0.2s; }
+    .fade-up:nth-child(4) { animation-delay: 0.3s; }
+    .fade-up:nth-child(5) { animation-delay: 0.4s; }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─────────────────────────────
+       RESPONSIVE
+    ───────────────────────────── */
+    @media (max-width: 960px) {
+      :root { --space-2xl: 3rem; --space-xl: 2rem; }
+      .hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-left { border-right: none; border-bottom: 1px solid var(--border-sub); }
+      .hero-right { padding-top: var(--space-lg); }
+      .about-layout, .skills-layout, .contact-layout { grid-template-columns: 1fr; gap: var(--space-xl); }
+      .scroll-cue { display: none; }
+    }
+    @media (max-width: 600px) {
+      :root { --space-2xl: 1.5rem; }
+      nav { padding: 0 1.5rem; }
+      nav ul { gap: 1rem; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+      .social-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav role="navigation" aria-label="Main navigation">
+  <div class="nav-logo" aria-label="Ajeet Singh">ajeet<span>.singh</span></div>
+  <ul>
+    <li><a href="#home">Home</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<main>
+<section class="hero" id="home" aria-label="Introduction">
+  <div class="hero-left">
+    <div class="hero-eyebrow fade-up">
+      <span class="eyebrow-line" aria-hidden="true"></span>
+      <span class="eyebrow-text">MLOps Engineer · DevOps · India</span>
+    </div>
+    <h1 class="hero-name fade-up">Ajeet <span class="accent">Singh.</span></h1>
+    <p class="hero-role fade-up">
+      MLOps Platform Engineer <span>←</span> <strong>DevOps &amp; CI/CD</strong> <span>←</span> Oracle DBA
+    </p>
+    <p class="hero-bio fade-up">
+      Turning experimental models into production-ready systems — from pipeline orchestration to scalable cloud-native ML infrastructure.
+    </p>
+    <div class="hero-actions fade-up">
+      <a href="#projects" class="btn btn-primary"><i class="fa-solid fa-code-branch" aria-hidden="true"></i> View Projects</a>
+      <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+    </div>
+    <span class="status-badge fade-up" role="status">
+      <span class="status-dot" aria-hidden="true"></span>
+      Open to MLOps consultation
+    </span>
+    <div class="scroll-cue" aria-hidden="true">
+      <i class="fa-solid fa-chevron-down"></i> scroll
+    </div>
+  </div>
+  <div class="hero-right" aria-label="Current focus and stack">
+
+    <!-- AI/MLOps Pipeline Illustration -->
+    <div class="hero-illustration" aria-hidden="true">
+      <svg viewBox="0 0 480 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="MLOps pipeline diagram">
+        <defs>
+          <linearGradient id="gLine" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#00d4e0" stop-opacity="0.8"/>
+            <stop offset="100%" stop-color="#34d88e" stop-opacity="0.8"/>
+          </linearGradient>
+          <linearGradient id="gBox" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#0b1424"/>
+            <stop offset="100%" stop-color="#162035"/>
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="2.5" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+
+        <!-- Pipeline flow lines -->
+        <line x1="80" y1="100" x2="140" y2="100" stroke="url(#gLine)" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.6">
+          <animate attributeName="stroke-dashoffset" from="14" to="0" dur="1.2s" repeatCount="indefinite"/>
+        </line>
+        <line x1="210" y1="100" x2="270" y2="100" stroke="url(#gLine)" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.6">
+          <animate attributeName="stroke-dashoffset" from="14" to="0" dur="1.2s" begin="0.3s" repeatCount="indefinite"/>
+        </line>
+        <line x1="340" y1="100" x2="400" y2="100" stroke="url(#gLine)" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.6">
+          <animate attributeName="stroke-dashoffset" from="14" to="0" dur="1.2s" begin="0.6s" repeatCount="indefinite"/>
+        </line>
+
+        <!-- Node 1: Code -->
+        <rect x="10" y="74" width="70" height="52" rx="8" fill="url(#gBox)" stroke="#00d4e0" stroke-width="1" opacity="0.9"/>
+        <text x="45" y="94" text-anchor="middle" fill="#00d4e0" font-size="9" font-family="JetBrains Mono, monospace" opacity="0.8">CODE</text>
+        <text x="45" y="107" text-anchor="middle" fill="#6b8ca8" font-size="7.5" font-family="JetBrains Mono, monospace">Git · CI/CD</text>
+        <circle cx="45" cy="118" r="2.5" fill="#34d88e" filter="url(#glow)">
+          <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- Node 2: Train -->
+        <rect x="140" y="74" width="70" height="52" rx="8" fill="url(#gBox)" stroke="#00d4e0" stroke-width="1" opacity="0.9"/>
+        <text x="175" y="94" text-anchor="middle" fill="#00d4e0" font-size="9" font-family="JetBrains Mono, monospace" opacity="0.8">TRAIN</text>
+        <text x="175" y="107" text-anchor="middle" fill="#6b8ca8" font-size="7.5" font-family="JetBrains Mono, monospace">SageMaker</text>
+        <circle cx="175" cy="118" r="2.5" fill="#34d88e" filter="url(#glow)">
+          <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" begin="0.5s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- Node 3: Deploy -->
+        <rect x="270" y="74" width="70" height="52" rx="8" fill="url(#gBox)" stroke="#f0a84a" stroke-width="1" opacity="0.9"/>
+        <text x="305" y="94" text-anchor="middle" fill="#f0a84a" font-size="9" font-family="JetBrains Mono, monospace" opacity="0.8">DEPLOY</text>
+        <text x="305" y="107" text-anchor="middle" fill="#6b8ca8" font-size="7.5" font-family="JetBrains Mono, monospace">K8s · ArgoCD</text>
+        <circle cx="305" cy="118" r="2.5" fill="#f0a84a" filter="url(#glow)">
+          <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" begin="1s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- Node 4: Monitor -->
+        <rect x="400" y="74" width="70" height="52" rx="8" fill="url(#gBox)" stroke="#34d88e" stroke-width="1" opacity="0.9"/>
+        <text x="435" y="94" text-anchor="middle" fill="#34d88e" font-size="9" font-family="JetBrains Mono, monospace" opacity="0.8">MONITOR</text>
+        <text x="435" y="107" text-anchor="middle" fill="#6b8ca8" font-size="7.5" font-family="JetBrains Mono, monospace">Prometheus</text>
+        <circle cx="435" cy="118" r="2.5" fill="#34d88e" filter="url(#glow)">
+          <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" begin="1.5s" repeatCount="indefinite"/>
+        </circle>
+
+        <!-- Top label -->
+        <text x="240" y="28" text-anchor="middle" fill="#445d72" font-size="8.5" font-family="JetBrains Mono, monospace" letter-spacing="3">// ML LIFECYCLE AUTOMATION</text>
+
+        <!-- Feedback loop arc -->
+        <path d="M 435 74 Q 435 30 240 30 Q 45 30 45 74" fill="none" stroke="#00d4e0" stroke-width="1" stroke-dasharray="5 4" opacity="0.25"/>
+
+        <!-- Kubernetes hexagon decoration -->
+        <polygon points="240,148 255,156 255,172 240,180 225,172 225,156" fill="none" stroke="#00d4e0" stroke-width="1" opacity="0.3"/>
+        <text x="240" y="168" text-anchor="middle" fill="#00d4e0" font-size="7" font-family="JetBrains Mono, monospace" opacity="0.5">K8s</text>
+      </svg>
+    </div>
+
+    <div class="info-card">
+      <p class="card-label">DevOps · MLOps Focus</p>
+      <ul class="focus-list" aria-label="Current technical focus areas">
+        <li><strong>Kubernetes &amp; Docker</strong> <em>— container orchestration &amp; packaging</em></li>
+        <li><strong>GitHub Actions &amp; ArgoCD</strong> <em>— CI/CD &amp; GitOps pipelines</em></li>
+        <li><strong>Terraform &amp; IaC</strong> <em>— infrastructure automation on AWS</em></li>
+        <li><strong>AWS SageMaker</strong> <em>— ML training &amp; deployment</em></li>
+        <li><strong>MLflow &amp; Kubeflow</strong> <em>— experiment tracking &amp; pipelines</em></li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <p class="card-label">Core Stack</p>
+      <div class="pill-group" aria-label="Technology stack">
+        <span class="pill pill--devops">Kubernetes</span><span class="pill pill--devops">Docker</span>
+        <span class="pill pill--devops">Terraform</span><span class="pill pill--devops">Git</span>
+        <span class="pill pill--devops">GitHub Actions</span><span class="pill pill--devops">ArgoCD</span>
+        <span class="pill">AWS EKS</span><span class="pill">MLflow</span>
+        <span class="pill">SageMaker</span><span class="pill">Prometheus</span>
+        <span class="pill">Airflow</span><span class="pill">Oracle</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROJECTS ── -->
+<section class="section section--alt" id="projects" aria-labelledby="projects-title">
+  <div class="sec-header">
+    <span class="sec-eyebrow">Featured Work</span>
+    <h2 class="sec-title" id="projects-title">Projects</h2>
+    <div class="sec-divider" aria-hidden="true"></div>
+  </div>
+  <div class="projects-grid">
+
+    <article class="proj-card">
+      <span class="proj-num">01 / 04</span>
+      <h3>AWS ML Platform-as-Code</h3>
+      <p>Automated provisioning of a complete SageMaker environment using Terraform. Includes VPC networking, IAM least-privilege roles, and EKS cluster setup for distributed training.</p>
+      <div class="proj-tags">
+        <span class="proj-tag">Terraform</span><span class="proj-tag">SageMaker</span>
+        <span class="proj-tag">EKS</span><span class="proj-tag">VPC</span>
+      </div>
+      <a href="https://github.com/singhajeet79/sagemaker-iac" target="_blank" rel="noopener" class="proj-link" aria-label="View AWS ML Platform source code">Source Code <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+    </article>
+
+    <article class="proj-card">
+      <span class="proj-num">02 / 04</span>
+      <h3>Feature Store</h3>
+      <p>Low-latency Feature Store using AWS Glue and Redis. Migrates legacy Oracle relational data into versioned format for real-time ML inference with DVC for data versioning.</p>
+      <div class="proj-tags">
+        <span class="proj-tag">AWS Glue</span><span class="proj-tag">Redis</span>
+        <span class="proj-tag">DVC</span><span class="proj-tag">Oracle</span>
+      </div>
+      <a href="https://github.com/singhajeet79/ml-feature-store" target="_blank" rel="noopener" class="proj-link" aria-label="View Feature Store source code">Source Code <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+    </article>
+
+    <article class="proj-card">
+      <span class="proj-num">03 / 04</span>
+      <h3>Automated Model Retraining Loop</h3>
+      <p>Full CI/CD/CT pipeline using GitHub Actions to trigger model retraining in MLflow when new data arrives in S3, with zero-downtime deployment via ArgoCD.</p>
+      <div class="proj-tags">
+        <span class="proj-tag">GitHub Actions</span><span class="proj-tag">MLflow</span>
+        <span class="proj-tag">ArgoCD</span><span class="proj-tag">S3</span>
+      </div>
+      <a href="https://github.com/singhajeet79/mlops-pipeline" target="_blank" rel="noopener" class="proj-link" aria-label="View Model Retraining source code">Source Code <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+    </article>
+
+    <article class="proj-card">
+      <span class="proj-num">04 / 04</span>
+      <h3>Model Health Dashboard</h3>
+      <p>Prometheus & Grafana stack monitoring model drift. Tracks prediction latency and accuracy decay — applying DBA-style health checks to production ML systems.</p>
+      <div class="proj-tags">
+        <span class="proj-tag">Prometheus</span><span class="proj-tag">Grafana</span>
+        <span class="proj-tag">Model Drift</span><span class="proj-tag">SLOs</span>
+      </div>
+      <a href="https://github.com/singhajeet79/ml-monitoring" target="_blank" rel="noopener" class="proj-link" aria-label="View Model Monitoring source code">Source Code <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+    </article>
+
+  </div>
+</section>
+
+<!-- ── ABOUT ── -->
+<section class="section" id="about" aria-labelledby="about-title">
+  <div class="sec-header">
+    <span class="sec-eyebrow">About</span>
+    <h2 class="sec-title" id="about-title">Who I Am</h2>
+    <div class="sec-divider" aria-hidden="true"></div>
+  </div>
+  <div class="about-layout">
+    <div>
+      <div class="about-text">
+        <p>I'm an <strong>MLOps & ML Platform Engineer</strong> with roots in DevOps and Oracle PeopleSoft DBA. That infrastructure background gives me a systems-level mindset — <em>reliability, observability, and scale</em> come before model accuracy.</p>
+        <p>My philosophy: the hardest part of ML isn't building the model — it's <strong>keeping it healthy in production</strong>. I apply DBA-level data integrity rigor to Feature Stores and DVC pipelines.</p>
+      </div>
+
+      <nav aria-label="Career timeline" class="timeline">
+        <div class="tl-entry">
+          <p class="tl-date">2023 → Present</p>
+          <p class="tl-role">MLOps / ML Platform Engineer</p>
+          <p class="tl-desc">Building automated model lifecycles, ML pipelines, and cloud-native infrastructure on AWS. SageMaker, Kubeflow, MLflow.</p>
+        </div>
+        <div class="tl-entry">
+          <p class="tl-date">2019 → 2023</p>
+          <p class="tl-role">DevOps Engineer</p>
+          <p class="tl-desc">CI/CD pipelines, Kubernetes workload management, infrastructure automation with Terraform, GitOps with ArgoCD.</p>
+        </div>
+        <div class="tl-entry">
+          <p class="tl-date">2011 → 2018</p>
+          <p class="tl-role">Oracle PeopleSoft DBA</p>
+          <p class="tl-desc">Database administration, Exadata performance tuning, high-availability architecture and disaster recovery.</p>
+        </div>
+      </nav>
+
+      <ul class="phil-list" aria-label="Engineering philosophy">
+        <li><strong>Infrastructure as Code:</strong> Eliminating "works on my laptop" syndrome in ML environments.</li>
+        <li><strong>Data Integrity:</strong> DBA-level rigor applied to Feature Stores and data versioning.</li>
+        <li><strong>Observability:</strong> Monitoring model drift and performance decay, not just system health.</li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="stat-grid" aria-label="Career statistics">
+        <div class="stat-cell"><span class="stat-num">5+</span><span class="stat-label">Years Cloud Infra</span></div>
+        <div class="stat-cell"><span class="stat-num">3</span><span class="stat-label">Cloud Providers</span></div>
+        <div class="stat-cell"><span class="stat-num">∞</span><span class="stat-label">Pipeline Iterations</span></div>
+        <div class="stat-cell"><span class="stat-num">01</span><span class="stat-label">Goal: Prod-Ready ML</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SKILLS ── -->
+<section class="section section--alt" id="skills" aria-labelledby="skills-title">
+  <div class="sec-header">
+    <span class="sec-eyebrow">Technical Expertise</span>
+    <h2 class="sec-title" id="skills-title">Skills</h2>
+    <div class="sec-divider" aria-hidden="true"></div>
+  </div>
+  <div class="skills-layout">
+    <div>
+      <p class="skill-group-label">MLOps & DevOps Engineering</p>
+      <div class="skill">
+        <div class="skill-row"><span class="skill-name skill-name--hi">DevOps Engineering</span><span class="skill-pct" aria-label="92 percent">92%</span></div>
+        <p class="skill-sub">
+          <span class="skill-tag">Kubernetes</span>
+          <span class="skill-tag">Docker</span>
+          <span class="skill-tag">Git</span>
+          <span class="skill-tag">GitHub Actions</span>
+          <span class="skill-tag">ArgoCD</span>
+          <span class="skill-tag">Jenkins</span>
+        </p>
+        <div class="bar-track" role="progressbar" aria-valuenow="92" aria-valuemin="0" aria-valuemax="100"><div class="bar-fill bar-fill--devops" style="width:92%"></div></div>
+      </div>
+      <div class="skill">
+        <div class="skill-row"><span class="skill-name">ML Infrastructure</span><span class="skill-pct" aria-label="85 percent">85%</span></div>
+        <p class="skill-sub">SageMaker · MLflow · Kubeflow · Feature Stores · DVC</p>
+        <div class="bar-track" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"><div class="bar-fill" style="width:85%"></div></div>
+      </div>
+      <div class="skill">
+        <div class="skill-row"><span class="skill-name">Data Engineering</span><span class="skill-pct" aria-label="88 percent">88%</span></div>
+        <p class="skill-sub">PySpark · Airflow · AWS Glue · Redshift · SQL</p>
+        <div class="bar-track" role="progressbar" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100"><div class="bar-fill" style="width:88%"></div></div>
+      </div>
+    </div>
+    <div>
+      <p class="skill-group-label">Cloud & DevOps</p>
+      <div class="skill">
+        <div class="skill-row"><span class="skill-name">Cloud & IaC</span><span class="skill-pct" aria-label="90 percent">90%</span></div>
+        <p class="skill-sub">AWS · Terraform · EKS · CloudWatch · S3 · IAM</p>
+        <div class="bar-track" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"><div class="bar-fill" style="width:90%"></div></div>
+      </div>
+      <div class="skill">
+        <div class="skill-row"><span class="skill-name">DevOps & CI/CD</span><span class="skill-pct" aria-label="85 percent">85%</span></div>
+        <p class="skill-sub">Docker · Kubernetes · GitHub Actions · ArgoCD · Jenkins</p>
+        <div class="bar-track" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"><div class="bar-fill" style="width:85%"></div></div>
+      </div>
+      <div class="skill">
+        <div class="skill-row"><span class="skill-name">Database Administration</span><span class="skill-pct" aria-label="88 percent">88%</span></div>
+        <p class="skill-sub">Oracle · PeopleSoft · Exadata · PostgreSQL · Redis</p>
+        <div class="bar-track" role="progressbar" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100"><div class="bar-fill" style="width:88%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section class="section" id="contact" aria-labelledby="contact-title">
+  <div class="sec-header">
+    <span class="sec-eyebrow">Contact</span>
+    <h2 class="sec-title" id="contact-title">Let's Connect</h2>
+    <div class="sec-divider" aria-hidden="true"></div>
+  </div>
+  <div class="contact-layout">
+    <div class="contact-left">
+      <p>Open to MLOps and data architecture consultation, collaboration on open-source ML tooling, and conversations about industrialising AI in production.</p>
+      <a href="/cdn-cgi/l/email-protection#d1a2b8bfb6b9b0bbb4b4a5e6e691b6bcb0b8bdffb2bebc" class="email-cta" aria-label="Send email to Ajeet Singh">
+        <i class="fa-regular fa-envelope" aria-hidden="true"></i>
+        <span class="__cf_email__" data-cfemail="33405a5d545b5259565647040473545e525a5f1d505c5e">[email&#160;protected]</span>
+      </a>
+    </div>
+    <nav aria-label="Social media links">
+      <div class="social-grid">
+        <a href="https://github.com/singhajeet79" target="_blank" rel="noopener" class="soc-link" aria-label="GitHub profile"><i class="fa-brands fa-github" aria-hidden="true"></i>GitHub</a>
+        <a href="https://www.linkedin.com/in/ajeet-devops-pro/" target="_blank" rel="noopener" class="soc-link" aria-label="LinkedIn profile"><i class="fa-brands fa-linkedin" aria-hidden="true"></i>LinkedIn</a>
+        <a href="https://x.com/_ajeett" target="_blank" rel="noopener" class="soc-link" aria-label="Twitter / X profile"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i>Twitter / X</a>
+        <a href="https://medium.com/@ajeets_91456" target="_blank" rel="noopener" class="soc-link" aria-label="Medium blog"><i class="fa-brands fa-medium" aria-hidden="true"></i>Medium</a>
+        <a href="https://hashnode.com/@e5081" target="_blank" rel="noopener" class="soc-link" aria-label="Hashnode blog"><i class="fa-brands fa-hashnode" aria-hidden="true"></i>Hashnode</a>
+      </div>
+    </nav>
+  </div>
+</section>
+</main>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p>&copy; 2026 <span class="f-teal">Ajeet Singh</span>. Built for Scalability.</p>
+  <nav class="footer-links" aria-label="Footer navigation">
+    <a href="#home">Top</a>
+    <a href="#projects">Projects</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Animate skill bars on scroll into view
+  const io = new IntersectionObserver(
+    entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('on'); }),
+    { threshold: 0.3 }
+  );
+  document.querySelectorAll('.bar-fill').forEach(b => io.observe(b));
+
+  // Active nav highlight on scroll
+  const sections = document.querySelectorAll('section[id], .hero[id]');
+  const navLinks = document.querySelectorAll('nav ul a');
+  const navObs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(a => a.removeAttribute('aria-current'));
+        const ac
